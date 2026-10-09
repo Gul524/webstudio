@@ -317,7 +317,6 @@ const TemplateFormFields = ({
     showDocumentTypeField={false}
     showAuthSection={false}
     showTextContentSection={false}
-    showMarketplaceSection={false}
     onChange={onChange}
   />
 );

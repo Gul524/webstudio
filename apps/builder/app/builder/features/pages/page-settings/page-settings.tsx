@@ -29,7 +29,6 @@ import {
   $isDesignMode,
   $permissions,
 } from "~/shared/nano-states";
-import { $project } from "~/shared/sync/data-stores";
 import { $openProjectSettings } from "~/shared/nano-states/project-settings";
 import { $pages } from "~/shared/sync/data-stores";
 import { $pageRootScope, duplicatePage } from "../page-utils";
@@ -51,7 +50,6 @@ import { executeRuntimeMutation } from "~/shared/instance-utils/data";
 import { AuthSection } from "./section-auth";
 import { CustomMetadataSection } from "./section-custom-metadata";
 import { GeneralSection } from "./section-general";
-import { MarketplaceSection } from "./section-marketplace";
 import { SearchSection } from "./section-search";
 import { SocialImageSection } from "./section-social-image";
 import { TextContentSection } from "./section-text-content";
@@ -126,7 +124,6 @@ export const FormFields = ({
   showRedirectWarning = showPathField,
   showAuthSection = isEditorContext === false,
   showTextContentSection = isEditorContext === false,
-  showMarketplaceSection = isEditorContext === false,
 }: {
   autoSelect?: boolean;
   errors: PageSettingsErrors;
@@ -146,9 +143,7 @@ export const FormFields = ({
   showRedirectWarning?: boolean;
   showAuthSection?: boolean;
   showTextContentSection?: boolean;
-  showMarketplaceSection?: boolean;
 }) => {
-  const project = useStore($project);
   const pages = useStore($pages);
   const { allowAuth } = useStore($permissions);
   const isDesignMode = useStore($isDesignMode);
@@ -279,16 +274,6 @@ export const FormFields = ({
             />
           </CollapsibleSection>
         )}
-
-        {values.documentType === "html" &&
-          showMarketplaceSection &&
-          (project?.marketplaceApprovalStatus === "PENDING" ||
-            project?.marketplaceApprovalStatus === "APPROVED" ||
-            project?.marketplaceApprovalStatus === "REJECTED") && (
-            <CollapsibleSection label="Marketplace">
-              <MarketplaceSection values={values} onChange={onChange} />
-            </CollapsibleSection>
-          )}
 
         <Box css={{ height: theme.spacing[10] }} />
       </ScrollAreaNative>
